@@ -7,12 +7,22 @@ addButton.addEventListener("click", () => {
   if (taskText === "") return;
 
   const li = document.createElement("li");
-  li.textContent = taskText;
-
-  li.addEventListener("click", () => {
+  const span = document.createElement("span");
+  span.textContent = taskText;
+  span.addEventListener("click", () => {
     li.classList.toggle("completed");
   });
 
+  const removeButton = document.createElement("button");
+  removeButton.textContent = "Remove";
+  removeButton.classList.add("remove-button");
+  removeButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    li.remove();
+  });
+
+  li.appendChild(span);
+  li.appendChild(removeButton);
   taskList.appendChild(li);
   taskInput.value = "";
 });

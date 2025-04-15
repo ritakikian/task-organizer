@@ -1,6 +1,7 @@
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addTaskButton");
 const taskList = document.getElementById("taskList");
+const filterButtons = document.querySelectorAll(".filters button");
 
 addButton.addEventListener("click", () => {
   const taskText = taskInput.value.trim();
@@ -30,3 +31,28 @@ addButton.addEventListener("click", () => {
 taskInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") addButton.click();
 });
+
+filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelector(".filters .active")?.classList.remove("active");
+      button.classList.add("active");
+  
+      const filter = button.dataset.filter;
+      const tasks = taskList.querySelectorAll("li");
+  
+      tasks.forEach((task) => {
+        const isCompleted = task.classList.contains("completed");
+  
+        if (
+          filter === "all" ||
+          (filter === "completed" && isCompleted) ||
+          (filter === "pending" && !isCompleted)
+        ) {
+          task.style.display = "flex";
+        } else {
+          task.style.display = "none";
+        }
+      });
+    });
+  });
+  
